@@ -42,7 +42,8 @@ export const getServerFeatureFlagsFromEdgeConfig = async (userId?: string) => {
 
       if (edgeFeatureFlags && Object.keys(edgeFeatureFlags).length > 0) {
         // Merge defaults + EdgeConfig + env flags so local env can always override
-        const mergedFlags = merge(DEFAULT_FEATURE_FLAGS, edgeFeatureFlags, envFlags);
+        const edgeMergedFlags = merge(DEFAULT_FEATURE_FLAGS, edgeFeatureFlags);
+        const mergedFlags = merge(edgeMergedFlags, envFlags);
         log('[FeatureFlags] Using EdgeConfig flags for user:', userId || 'anonymous');
         return mergedFlags;
       } else {
