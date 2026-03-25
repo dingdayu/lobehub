@@ -70,6 +70,15 @@ describe('parseFeatureFlag', () => {
     });
   });
 
+  it('should parse flags wrapped with quotes', () => {
+    const input = '"-provider_settings,+api_key_manage"';
+
+    expect(parseFeatureFlag(input)).toEqual({
+      api_key_manage: true,
+      provider_settings: false,
+    });
+  });
+
   it('should handle flags with underscores and numbers', () => {
     const input = '+feature_1,-feature_2';
 

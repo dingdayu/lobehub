@@ -11,11 +11,13 @@ export function parseFeatureFlag(flagString?: string): Partial<IFeatureFlags> {
 
   if (!flagString) return flags;
 
+  const normalizedFlagString = flagString.trim().replace(/^['"]|['"]$/g, '');
+
   // Replace Chinese commas with English commas and split string by comma
-  const flagArray = flagString.trim().replaceAll('，', ',').split(',');
+  const flagArray = normalizedFlagString.replaceAll('，', ',').split(',');
 
   for (let flag of flagArray) {
-    flag = flag.trim();
+    flag = flag.trim().replace(/^['"]|['"]$/g, '');
     if (flag.startsWith('+') || flag.startsWith('-')) {
       const operation = flag[0];
       const key = flag.slice(1);
